@@ -106,7 +106,7 @@ const DEFAULT_EXPERIENCES: Experience[] = [
     position: "40-Hour Training — US GAAP",
     duration: "",
     description:
-      "Recently completed a 40-hour training at Sync2VA focused on US GAAP. Experienced in using QuickBooks Online and SAP, with deeper knowledge gained in key bookkeeping processes.",
+      "Recently completed a 40-hour training at Sync2VA focused on US GAAP, with deeper knowledge gained in key bookkeeping processes.",
     focusAreas: [],
     keyExpertise: [
       "Chart of Accounts setup",
@@ -116,7 +116,6 @@ const DEFAULT_EXPERIENCES: Experience[] = [
       "Balance Sheet reporting",
       "Profit and Loss reporting",
       "QuickBooks Online",
-      "SAP",
     ],
   },
 ];
@@ -297,42 +296,6 @@ export function Portfolio() {
   ) => {
     const updated = [...editedExperiences];
     updated[index] = { ...updated[index], [field]: value };
-    setEditedExperiences(updated);
-    setPendingChanges(true);
-  };
-
-  const addExpertiseToExperience = (expIndex: number) => {
-    const updated = [...editedExperiences];
-    const current = updated[expIndex].keyExpertise || [];
-    updated[expIndex] = {
-      ...updated[expIndex],
-      keyExpertise: [...current, ""],
-    };
-    setEditedExperiences(updated);
-    setPendingChanges(true);
-  };
-
-  const updateExpertiseInExperience = (
-    expIndex: number,
-    expertiseIndex: number,
-    value: string,
-  ) => {
-    const updated = [...editedExperiences];
-    const expertise = [...(updated[expIndex].keyExpertise || [])];
-    expertise[expertiseIndex] = value;
-    updated[expIndex] = { ...updated[expIndex], keyExpertise: expertise };
-    setEditedExperiences(updated);
-    setPendingChanges(true);
-  };
-
-  const removeExpertiseFromExperience = (
-    expIndex: number,
-    expertiseIndex: number,
-  ) => {
-    const updated = [...editedExperiences];
-    const expertise = [...(updated[expIndex].keyExpertise || [])];
-    expertise.splice(expertiseIndex, 1);
-    updated[expIndex] = { ...updated[expIndex], keyExpertise: expertise };
     setEditedExperiences(updated);
     setPendingChanges(true);
   };
@@ -604,9 +567,12 @@ export function Portfolio() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
                 About Me
               </h2>
+              <p className="text-2xl md:text-3xl font-bold text-primary mb-4 tracking-wide">
+                Iris Greziel Espanto
+              </p>
               <Separator className="w-24 mx-auto" />
             </div>
 
@@ -824,74 +790,6 @@ export function Portfolio() {
                             </div>
                           </div>
                         )}
-
-                        {exp.keyExpertise && exp.keyExpertise.length > 0 && (
-                          <div className="space-y-3 pt-4 border-t">
-                            <div className="flex items-center justify-between">
-                              <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
-                                <Award className="h-4 w-4 text-primary" />
-                                Key Expertise
-                              </h4>
-                              {isEditMode && (
-                                <Button
-                                  onClick={() =>
-                                    addExpertiseToExperience(index)
-                                  }
-                                  size="sm"
-                                  variant="outline"
-                                >
-                                  <Plus className="h-4 w-4 mr-1" />
-                                  Add
-                                </Button>
-                              )}
-                            </div>
-                            <div className="grid md:grid-cols-2 gap-3">
-                              {exp.keyExpertise.map(
-                                (expertise, expertiseIndex) => (
-                                  <div
-                                    key={`${exp.company}-exp-${expertiseIndex}`}
-                                    className="flex items-center gap-2"
-                                  >
-                                    {isEditMode ? (
-                                      <>
-                                        <Input
-                                          value={expertise}
-                                          onChange={(e) =>
-                                            updateExpertiseInExperience(
-                                              index,
-                                              expertiseIndex,
-                                              e.target.value,
-                                            )
-                                          }
-                                          className="flex-1"
-                                        />
-                                        <Button
-                                          onClick={() =>
-                                            removeExpertiseFromExperience(
-                                              index,
-                                              expertiseIndex,
-                                            )
-                                          }
-                                          size="sm"
-                                          variant="ghost"
-                                        >
-                                          <Trash2 className="h-4 w-4 text-destructive" />
-                                        </Button>
-                                      </>
-                                    ) : (
-                                      <div className="flex items-center gap-2 p-2 rounded-md bg-secondary/50 w-full">
-                                        <div className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
-                                        <span className="text-sm text-muted-foreground">
-                                          {expertise}
-                                        </span>
-                                      </div>
-                                    )}
-                                  </div>
-                                ),
-                              )}
-                            </div>
-                          </div>
-                        )}
                       </CardContent>
                     </Card>
                   ),
@@ -953,6 +851,59 @@ export function Portfolio() {
                     ))}
                   </div>
                 )}
+
+                {/* Bookkeeper Service Card */}
+                <Card className="border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-50/40 to-background dark:from-emerald-950/20">
+                  <CardHeader>
+                    <div className="flex items-start gap-3">
+                      <div className="h-12 w-12 rounded-lg bg-emerald-500/15 flex items-center justify-center flex-shrink-0">
+                        <Calculator className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                      </div>
+                      <div className="flex-1">
+                        <CardTitle className="text-xl mb-2">
+                          Bookkeeper
+                        </CardTitle>
+                        <CardDescription className="text-base leading-relaxed">
+                          Accurate and up-to-date financial record management —
+                          from recording every transaction to producing clear
+                          financial statements that keep your business informed
+                          and compliant.
+                        </CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                        Key Expertise
+                      </h4>
+                      <div className="grid md:grid-cols-2 gap-3">
+                        {[
+                          "Recording Transactions",
+                          "Chart of Accounts",
+                          "Reconciling Accounts",
+                          "Account Payables",
+                          "Account Receivable",
+                          "Payroll Processing",
+                          "Financial Reporting",
+                          "Balance Sheet",
+                          "Profit and Loss Statement",
+                        ].map((item) => (
+                          <div
+                            key={item}
+                            className="flex items-center gap-2 p-2 rounded-md bg-emerald-50/60 dark:bg-emerald-950/30 w-full"
+                          >
+                            <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
+                            <span className="text-sm text-muted-foreground">
+                              {item}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
 
                 {/* Detailed Accounts Payable Section */}
                 {(isEditMode
@@ -1199,85 +1150,135 @@ export function Portfolio() {
               </div>
             ) : (
               <div className="grid md:grid-cols-3 gap-6">
-                {(isEditMode ? editedTools : portfolioData?.tools || []).map(
-                  (tool, index) => {
-                    const getIcon = () => {
-                      if (tool.name === "QuickBooks")
-                        return (
-                          <SiQuickbooks className="h-12 w-12 text-primary" />
-                        );
-                      if (tool.name === "Microsoft Excel")
-                        return <Sheet className="h-12 w-12 text-primary" />;
-                      return <Award className="h-12 w-12 text-primary" />;
-                    };
+                {(isEditMode
+                  ? editedTools
+                  : (() => {
+                      const base = portfolioData?.tools || [];
+                      const names = base.map((t) => t.name);
+                      const fallbacks: Tool[] = [];
+                      if (!names.includes("SAP"))
+                        fallbacks.push({
+                          name: "SAP",
+                          icon: "sap-icon.svg",
+                          expertiseLevel: "Proficient",
+                          notes:
+                            "Experience using SAP for financial transactions and record keeping.",
+                        } as Tool);
+                      if (!names.includes("QuickBooks"))
+                        fallbacks.push({
+                          name: "QuickBooks",
+                          icon: "quickbooks-icon.svg",
+                          expertiseLevel: "Advanced",
+                          notes:
+                            "Proficient in QuickBooks Online: Chart of Accounts setup, bank deposits, transaction recording, bank reconciliation, and financial reports.",
+                        } as Tool);
+                      if (!names.includes("Google Workspace"))
+                        fallbacks.push({
+                          name: "Google Workspace",
+                          icon: "google-icon.svg",
+                          expertiseLevel: "Proficient",
+                          notes:
+                            "Uses Google Sheets, Docs, Drive, and Gmail to manage financial data, collaborate with clients, and organize records efficiently.",
+                        } as Tool);
+                      if (!names.includes("Microsoft Office"))
+                        fallbacks.push({
+                          name: "Microsoft Office",
+                          icon: "msoffice-icon.svg",
+                          expertiseLevel: "Proficient",
+                          notes:
+                            "Skilled in Microsoft Excel, Word, and Outlook for spreadsheets, financial reports, document preparation, and professional communication.",
+                        } as Tool);
+                      return [...base, ...fallbacks];
+                    })()
+                ).map((tool, index) => {
+                  const getIcon = () => {
+                    if (tool.name === "QuickBooks")
+                      return (
+                        <SiQuickbooks className="h-12 w-12 text-primary" />
+                      );
+                    if (
+                      tool.name === "Microsoft Office" ||
+                      tool.name === "Microsoft Excel"
+                    )
+                      return <Sheet className="h-12 w-12 text-primary" />;
+                    if (tool.name === "Google Workspace")
+                      return (
+                        <svg
+                          className="h-12 w-12 text-primary"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          role="img"
+                          aria-label="Google Workspace"
+                        >
+                          <title>Google Workspace</title>
+                          <path d="M12 11.245l-8.75 5.054V7.7L12 2.646 20.75 7.7v8.599L12 11.245zm0 1.51l8.75 5.054-8.75 5.054L3.25 17.81 12 12.755z" />
+                        </svg>
+                      );
+                    return <Award className="h-12 w-12 text-primary" />;
+                  };
 
-                    return (
-                      <Card
-                        key={tool.name || `tool-${index}`}
-                        className="border-2 text-center"
-                      >
-                        <CardContent className="pt-8 pb-6 space-y-4">
-                          <div className="flex justify-center">
-                            <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center">
-                              {getIcon()}
-                            </div>
+                  return (
+                    <Card
+                      key={tool.name || `tool-${index}`}
+                      className="border-2 text-center"
+                    >
+                      <CardContent className="pt-8 pb-6 space-y-4">
+                        <div className="flex justify-center">
+                          <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center">
+                            {getIcon()}
                           </div>
-                          <div className="space-y-2">
-                            {isEditMode ? (
-                              <>
-                                <Input
-                                  value={tool.name}
-                                  onChange={(e) =>
-                                    updateToolField(
-                                      index,
-                                      "name",
-                                      e.target.value,
-                                    )
-                                  }
-                                  className="text-center font-bold"
-                                />
-                                <Input
-                                  value={tool.expertiseLevel}
-                                  onChange={(e) =>
-                                    updateToolField(
-                                      index,
-                                      "expertiseLevel",
-                                      e.target.value,
-                                    )
-                                  }
-                                  className="text-center"
-                                />
-                                <Textarea
-                                  value={tool.notes}
-                                  onChange={(e) =>
-                                    updateToolField(
-                                      index,
-                                      "notes",
-                                      e.target.value,
-                                    )
-                                  }
-                                  className="min-h-[80px] text-sm"
-                                />
-                              </>
-                            ) : (
-                              <>
-                                <h3 className="font-bold text-lg text-foreground mb-1">
-                                  {tool.name}
-                                </h3>
-                                <Badge variant="secondary" className="mb-3">
-                                  {tool.expertiseLevel}
-                                </Badge>
-                                <p className="text-sm text-muted-foreground leading-relaxed">
-                                  {tool.notes}
-                                </p>
-                              </>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    );
-                  },
-                )}
+                        </div>
+                        <div className="space-y-2">
+                          {isEditMode ? (
+                            <>
+                              <Input
+                                value={tool.name}
+                                onChange={(e) =>
+                                  updateToolField(index, "name", e.target.value)
+                                }
+                                className="text-center font-bold"
+                              />
+                              <Input
+                                value={tool.expertiseLevel}
+                                onChange={(e) =>
+                                  updateToolField(
+                                    index,
+                                    "expertiseLevel",
+                                    e.target.value,
+                                  )
+                                }
+                                className="text-center"
+                              />
+                              <Textarea
+                                value={tool.notes}
+                                onChange={(e) =>
+                                  updateToolField(
+                                    index,
+                                    "notes",
+                                    e.target.value,
+                                  )
+                                }
+                                className="min-h-[80px] text-sm"
+                              />
+                            </>
+                          ) : (
+                            <>
+                              <h3 className="font-bold text-lg text-foreground mb-1">
+                                {tool.name}
+                              </h3>
+                              <Badge variant="secondary" className="mb-3">
+                                {tool.expertiseLevel}
+                              </Badge>
+                              <p className="text-sm text-muted-foreground leading-relaxed">
+                                {tool.notes}
+                              </p>
+                            </>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </div>
             )}
 
