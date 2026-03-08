@@ -1,0 +1,11 @@
+{
+  "frontend/src/App.tsx": "Main application component wrapping the Portfolio page with ThemeProvider, InternetIdentityProvider, and QueryClientProvider for authentication and state management.",
+  "frontend/src/hooks/useQueries.ts": "Custom React Query hooks for fetching portfolio data, submitting contact forms, checking admin status, and updating all portfolio sections (experience, services, accounts payable/receivable, tools, and about content).",
+  "frontend/src/pages/LogoShowcase.tsx": "Complete logo showcase page with Daily Bloom main logo in sticky header, displaying logo variations, color palette, and design principles in a clean layout.",
+  "frontend/src/index.css": "Global styles with OKLCH color system customized for professional bookkeeping aesthetics using subtle greens and neutral tones for both light and dark modes.",
+  "frontend/tailwind.config.js": "Tailwind configuration with professional design tokens matching the bookkeeping portfolio brand aesthetic.",
+  "frontend/index.html": "HTML entry point with professional bookkeeping metadata, theme color, and favicon.",
+  "frontend/src/components/SplashScreen.tsx": "Loading splash screen component displaying the Daily Bloom main logo with animated loading dots.",
+  "frontend/src/pages/DailyPlanner.tsx": "Daily planner interface with dynamic date display, morning intentions, evening reflection, habit tracker with \"Healthy Habits\" and \"Self-Care\" sections, streak tracker with visual progress animations showing continuous growth streaks (overall, healthy habits, and self-care), daily reflection prompts with rotating calming questions, local storage persistence for all data including streaks and reflections, blooming success animations, gentle encouragement messages, and streak milestone celebrations.",
+  "frontend/src/pages/Portfolio.tsx": "Complete professional bookkeeping portfolio page with admin edit mode toggle, in-place editing for all sections (about, experience, services, accounts payable/receivable, tools), authentication integration, local state management with backend sync, confirmation dialogs, and smooth transitions matching the professional aesthetic with proper TypeScript typing for promises array."
+}
