@@ -4,6 +4,7 @@ import type {
   AccountsReceivable,
   ContactConfirmation,
   ContactFormInput,
+  ContactInquiry,
   Experience,
   PortfolioData,
   Service,
@@ -138,6 +139,32 @@ export function useUpdateAbout() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["portfolioData"] });
+    },
+  });
+}
+
+export function useGetContactInquiries() {
+  const { actor, isFetching } = useActor();
+  return useQuery<ContactInquiry[]>({
+    queryKey: ["contactInquiries"],
+    queryFn: async () => {
+      if (!actor) throw new Error("Actor not initialized");
+      return actor.getContactInquiries();
+    },
+    enabled: !!actor && !isFetching,
+  });
+}
+
+export function useDeleteContactInquiry() {
+  const { actor } = useActor();
+  const queryClient = useQueryClient();
+  return useMutation<void, Error, bigint>({
+    mutationFn: async (id) => {
+      if (!actor) throw new Error("Actor not initialized");
+      return actor.deleteContactInquiry(id);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["contactInquiries"] });
     },
   });
 }
