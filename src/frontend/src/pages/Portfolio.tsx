@@ -315,7 +315,7 @@ export function Portfolio() {
   const updateExperienceField = (
     index: number,
     field: keyof Experience,
-    value: any,
+    value: string | string[],
   ) => {
     const updated = [...editedExperiences];
     updated[index] = { ...updated[index], [field]: value };
@@ -417,12 +417,16 @@ export function Portfolio() {
       <Toaster />
 
       {/* Header/Navigation */}
-      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-50 bg-background/90 backdrop-blur border-b border-border">
         <div className="container mx-auto px-4 py-4">
           <nav className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Calculator className="h-6 w-6 text-primary" />
-              <span className="text-xl font-semibold text-foreground">
+              <img
+                src="/assets/uploads/logo-1.png"
+                alt="Iris Greziel Espanto Bookkeeper Logo"
+                className="h-8 w-8 object-contain"
+              />
+              <span className="text-xl font-semibold font-serif text-foreground">
                 Professional Bookkeeping
               </span>
             </div>
@@ -433,7 +437,8 @@ export function Portfolio() {
                   setShowInbox(false);
                   scrollToSection("about");
                 }}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                data-ocid="nav.about.link"
               >
                 About
               </button>
@@ -443,7 +448,8 @@ export function Portfolio() {
                   setShowInbox(false);
                   scrollToSection("experience");
                 }}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                data-ocid="nav.experience.link"
               >
                 Experience
               </button>
@@ -453,7 +459,8 @@ export function Portfolio() {
                   setShowInbox(false);
                   scrollToSection("services");
                 }}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                data-ocid="nav.services.link"
               >
                 Services
               </button>
@@ -463,7 +470,8 @@ export function Portfolio() {
                   setShowInbox(false);
                   scrollToSection("tools");
                 }}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                data-ocid="nav.tools.link"
               >
                 Expertise
               </button>
@@ -472,7 +480,7 @@ export function Portfolio() {
                   type="button"
                   data-ocid="nav.inbox.button"
                   onClick={() => setShowInbox(true)}
-                  className="relative text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5"
+                  className="relative text-sm font-medium text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5"
                 >
                   <Inbox className="h-4 w-4" />
                   Inbox
@@ -489,13 +497,20 @@ export function Portfolio() {
                   scrollToSection("contact");
                 }}
                 size="sm"
+                className="bg-primary text-primary-foreground hover:bg-primary/90"
+                data-ocid="nav.contact.button"
               >
                 Contact
               </Button>
 
               {/* Auth Button */}
               {isAuthenticated ? (
-                <Button onClick={clear} variant="outline" size="sm">
+                <Button
+                  onClick={clear}
+                  variant="outline"
+                  size="sm"
+                  data-ocid="nav.logout.button"
+                >
                   <LogOut className="h-4 w-4 mr-2" />
                   Logout
                 </Button>
@@ -505,6 +520,7 @@ export function Portfolio() {
                   variant="outline"
                   size="sm"
                   disabled={isLoggingIn}
+                  data-ocid="nav.login.button"
                 >
                   <LogIn className="h-4 w-4 mr-2" />
                   {isLoggingIn ? "Logging in..." : "Login"}
@@ -517,7 +533,7 @@ export function Portfolio() {
 
       {/* Edit Mode Toggle */}
       {showEditToggle && !showInbox && (
-        <div className="sticky top-16 z-40 border-b bg-accent/10 backdrop-blur">
+        <div className="sticky top-16 z-40 bg-secondary/50 border-b border-border backdrop-blur">
           <div className="container mx-auto px-4 py-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -544,11 +560,17 @@ export function Portfolio() {
                     onClick={handleSaveAll}
                     size="sm"
                     disabled={!pendingChanges}
+                    data-ocid="edit.save.button"
                   >
                     <Save className="h-4 w-4 mr-2" />
                     Save All Changes
                   </Button>
-                  <Button onClick={toggleEditMode} variant="outline" size="sm">
+                  <Button
+                    onClick={toggleEditMode}
+                    variant="outline"
+                    size="sm"
+                    data-ocid="edit.cancel.button"
+                  >
                     <X className="h-4 w-4 mr-2" />
                     Cancel
                   </Button>
@@ -561,7 +583,7 @@ export function Portfolio() {
 
       {/* Confirmation Dialog */}
       <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent data-ocid="edit.confirm.dialog">
           <AlertDialogHeader>
             <AlertDialogTitle>Unsaved Changes</AlertDialogTitle>
             <AlertDialogDescription>
@@ -570,8 +592,13 @@ export function Portfolio() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Continue Editing</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmExitEditMode}>
+            <AlertDialogCancel data-ocid="edit.confirm.cancel_button">
+              Continue Editing
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={confirmExitEditMode}
+              data-ocid="edit.confirm.confirm_button"
+            >
               Discard Changes
             </AlertDialogAction>
           </AlertDialogFooter>
@@ -590,7 +617,7 @@ export function Portfolio() {
                   size="sm"
                   data-ocid="inbox.back.button"
                   onClick={() => setShowInbox(false)}
-                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-primary"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   Back to Portfolio
@@ -599,10 +626,10 @@ export function Portfolio() {
 
               <div className="mb-8">
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <div className="h-10 w-10 rounded-lg bg-primary/15 flex items-center justify-center">
                     <Inbox className="h-5 w-5 text-primary" />
                   </div>
-                  <h1 className="text-3xl font-bold text-foreground">
+                  <h1 className="text-3xl font-bold font-serif text-foreground">
                     Messages Inbox
                   </h1>
                 </div>
@@ -611,7 +638,7 @@ export function Portfolio() {
                 </p>
               </div>
 
-              <Separator className="mb-8" />
+              <div className="w-16 h-0.5 bg-primary rounded-full mb-8" />
 
               {/* Loading State */}
               {isInboxLoading && (
@@ -668,7 +695,7 @@ export function Portfolio() {
                       return (
                         <Card
                           key={String(inquiry.id)}
-                          className="border-2 hover:border-primary/40 transition-colors"
+                          className="border border-border hover:border-primary/40 transition-colors shadow-card"
                           data-ocid={`inbox.message.item.${index + 1}`}
                         >
                           <CardContent className="pt-5 pb-4">
@@ -703,7 +730,7 @@ export function Portfolio() {
                                   size="sm"
                                   data-ocid={`inbox.message.view.${index + 1}`}
                                   onClick={() => setSelectedMessage(inquiry)}
-                                  className="flex items-center gap-1.5"
+                                  className="flex items-center gap-1.5 hover:border-primary/50 hover:text-primary"
                                 >
                                   <Eye className="h-3.5 w-3.5" />
                                   View
@@ -740,7 +767,9 @@ export function Portfolio() {
       >
         <DialogContent className="max-w-lg" data-ocid="inbox.dialog">
           <DialogHeader>
-            <DialogTitle className="text-xl">Message Details</DialogTitle>
+            <DialogTitle className="text-xl font-serif">
+              Message Details
+            </DialogTitle>
             <DialogDescription>
               Full message from {selectedMessage?.name}
             </DialogDescription>
@@ -867,15 +896,28 @@ export function Portfolio() {
       {!showInbox && (
         <>
           {/* Hero Section */}
-          <section className="relative py-20 md:py-32 bg-gradient-to-br from-primary/5 via-background to-accent/5">
-            <div className="container mx-auto px-4">
+          <section className="relative py-20 md:py-32 bg-gradient-to-br from-background via-background to-secondary/30 overflow-hidden">
+            {/* Decorative background glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+            {/* Large decorative background word */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+              <span className="text-[8rem] md:text-[12rem] font-serif font-bold text-primary/5 leading-none whitespace-nowrap">
+                BOOKKEEPER
+              </span>
+            </div>
+            <div className="container mx-auto px-4 relative">
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
-                  <Badge variant="secondary" className="w-fit">
+                  {/* Gold accent line */}
+                  <div className="w-16 h-1 bg-primary rounded-full" />
+                  <Badge
+                    variant="outline"
+                    className="w-fit border border-primary/40 bg-primary/10 text-primary"
+                  >
                     <Award className="h-3 w-3 mr-1" />
                     Professional Bookkeeping Services
                   </Badge>
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground">
+                  <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold font-serif tracking-tight text-foreground">
                     Virtual Bookkeeper
                   </h1>
                   <p className="text-lg text-muted-foreground leading-relaxed">
@@ -884,10 +926,15 @@ export function Portfolio() {
                     accuracy, reliability, and financial clarity for your
                     business.
                   </p>
+                  <p className="text-primary font-medium text-lg">
+                    Your finances, handled with precision.
+                  </p>
                   <div className="flex flex-wrap gap-4">
                     <Button
                       size="lg"
+                      className="bg-primary text-primary-foreground hover:bg-primary/90"
                       onClick={() => scrollToSection("contact")}
+                      data-ocid="hero.contact.primary_button"
                     >
                       Get in Touch
                     </Button>
@@ -895,16 +942,17 @@ export function Portfolio() {
                       size="lg"
                       variant="outline"
                       onClick={() => scrollToSection("services")}
+                      data-ocid="hero.services.secondary_button"
                     >
                       View Services
                     </Button>
                   </div>
                 </div>
-                <div className="relative">
+                <div className="relative flex justify-center">
                   <img
                     src="/assets/uploads/irish_2x2-Pic-1.jpg"
                     alt="Professional headshot"
-                    className="rounded-2xl shadow-2xl w-full max-w-md mx-auto"
+                    className="rounded-2xl w-full max-w-md mx-auto ring-4 ring-primary/30 ring-offset-4 ring-offset-background shadow-[0_0_60px_oklch(0.78_0.14_80/_0.25)]"
                   />
                 </div>
               </div>
@@ -912,21 +960,26 @@ export function Portfolio() {
           </section>
 
           {/* About Section */}
-          <section id="about" className="py-20 bg-background">
-            <div className="container mx-auto px-4">
+          <section
+            id="about"
+            className="py-20 bg-background relative overflow-hidden"
+          >
+            {/* Decorative glow */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/3 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+            <div className="container mx-auto px-4 relative">
               <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+                  <h2 className="text-3xl md:text-4xl font-bold font-serif text-foreground mb-3">
                     About Me
                   </h2>
-                  <p className="text-2xl md:text-3xl font-bold text-primary mb-4 tracking-wide">
+                  <p className="text-3xl md:text-4xl font-bold font-serif text-primary mb-4 tracking-wide">
                     Iris Greziel Espanto
                   </p>
-                  <Separator className="w-24 mx-auto" />
+                  <div className="w-16 h-0.5 bg-primary rounded-full mx-auto mt-2 mb-8" />
                 </div>
 
                 {isLoading ? (
-                  <div className="space-y-4">
+                  <div className="space-y-4" data-ocid="about.loading_state">
                     <Skeleton className="h-6 w-full" />
                     <Skeleton className="h-6 w-full" />
                     <Skeleton className="h-6 w-3/4" />
@@ -943,6 +996,7 @@ export function Portfolio() {
                             setPendingChanges(true);
                           }}
                           className="min-h-[120px]"
+                          data-ocid="about.textarea"
                         />
                       </div>
                     ) : (
@@ -952,10 +1006,10 @@ export function Portfolio() {
                     )}
 
                     <div className="grid md:grid-cols-3 gap-6 mt-12">
-                      <Card className="text-center">
+                      <Card className="text-center bg-secondary border border-border border-t-2 border-t-primary hover:border-primary/40 transition-colors shadow-card">
                         <CardContent className="pt-6">
                           <div className="flex justify-center mb-4">
-                            <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                            <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center">
                               <CheckCircle2 className="h-6 w-6 text-primary" />
                             </div>
                           </div>
@@ -969,10 +1023,10 @@ export function Portfolio() {
                         </CardContent>
                       </Card>
 
-                      <Card className="text-center">
+                      <Card className="text-center bg-secondary border border-border border-t-2 border-t-primary hover:border-primary/40 transition-colors shadow-card">
                         <CardContent className="pt-6">
                           <div className="flex justify-center mb-4">
-                            <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                            <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center">
                               <TrendingUp className="h-6 w-6 text-primary" />
                             </div>
                           </div>
@@ -985,10 +1039,10 @@ export function Portfolio() {
                         </CardContent>
                       </Card>
 
-                      <Card className="text-center">
+                      <Card className="text-center bg-secondary border border-border border-t-2 border-t-primary hover:border-primary/40 transition-colors shadow-card">
                         <CardContent className="pt-6">
                           <div className="flex justify-center mb-4">
-                            <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+                            <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center">
                               <FileCheck className="h-6 w-6 text-primary" />
                             </div>
                           </div>
@@ -1009,21 +1063,21 @@ export function Portfolio() {
           </section>
 
           {/* Experience Section */}
-          <section
-            id="experience"
-            className="py-20 bg-gradient-to-br from-accent/5 to-background"
-          >
+          <section id="experience" className="py-20 bg-secondary/20">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  <h2 className="text-3xl md:text-4xl font-bold font-serif text-foreground mb-4">
                     Experience
                   </h2>
-                  <Separator className="w-24 mx-auto" />
+                  <div className="w-16 h-0.5 bg-primary rounded-full mx-auto mt-2 mb-8" />
                 </div>
 
                 {isLoading ? (
-                  <div className="space-y-6">
+                  <div
+                    className="space-y-6"
+                    data-ocid="experience.loading_state"
+                  >
                     <Skeleton className="h-48 w-full" />
                     <Skeleton className="h-48 w-full" />
                   </div>
@@ -1033,7 +1087,8 @@ export function Portfolio() {
                       (exp, index) => (
                         <Card
                           key={exp.company || `exp-${index}`}
-                          className="border-2"
+                          className="border border-border bg-card hover:border-primary/30 shadow-card transition-all"
+                          data-ocid={`experience.item.${index + 1}`}
                         >
                           <CardHeader>
                             <div className="flex items-start justify-between gap-4">
@@ -1066,10 +1121,10 @@ export function Portfolio() {
                                   </>
                                 ) : (
                                   <>
-                                    <CardTitle className="text-xl mb-1">
+                                    <CardTitle className="text-xl mb-1 font-serif">
                                       {exp.position}
                                     </CardTitle>
-                                    <CardDescription className="text-base font-medium text-foreground">
+                                    <CardDescription className="text-base font-medium text-primary">
                                       {exp.company}
                                     </CardDescription>
                                   </>
@@ -1116,7 +1171,7 @@ export function Portfolio() {
                             )}
 
                             {exp.focusAreas.length > 0 && (
-                              <div className="space-y-3 pt-4 border-t">
+                              <div className="space-y-3 pt-4 border-t border-border">
                                 <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
                                   <Briefcase className="h-4 w-4 text-primary" />
                                   Key Focus Areas
@@ -1156,10 +1211,10 @@ export function Portfolio() {
             <div className="container mx-auto px-4">
               <div className="max-w-5xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  <h2 className="text-3xl md:text-4xl font-bold font-serif text-foreground mb-4">
                     Services
                   </h2>
-                  <Separator className="w-24 mx-auto" />
+                  <div className="w-16 h-0.5 bg-primary rounded-full mx-auto mt-2 mb-4" />
                   <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
                     Comprehensive bookkeeping and financial management services
                     tailored to your business needs
@@ -1167,7 +1222,10 @@ export function Portfolio() {
                 </div>
 
                 {isLoading ? (
-                  <div className="grid md:grid-cols-2 gap-6">
+                  <div
+                    className="grid md:grid-cols-2 gap-6"
+                    data-ocid="services.loading_state"
+                  >
                     <Skeleton className="h-48" />
                     <Skeleton className="h-48" />
                     <Skeleton className="h-48" />
@@ -1175,17 +1233,29 @@ export function Portfolio() {
                   </div>
                 ) : (
                   <div className="space-y-8">
+                    {/* Why Work With Me callout */}
+                    <div className="mb-10 p-6 rounded-2xl bg-gradient-to-r from-primary/15 via-primary/8 to-transparent border border-primary/25">
+                      <p className="text-lg font-semibold text-primary font-serif mb-1">
+                        Why Work With Me?
+                      </p>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
+                        I bring precision, reliability, and QuickBooks expertise
+                        to every engagement — so you can focus on growing your
+                        business while I keep your finances spotless.
+                      </p>
+                    </div>
+
                     {/* General Services Grid */}
                     {generalServices.length > 0 && (
                       <div className="grid md:grid-cols-2 gap-6">
                         {generalServices.map((service) => (
                           <Card
                             key={service.title}
-                            className="border-2 hover:border-primary/50 transition-colors"
+                            className="border border-border bg-card hover:border-primary/40 shadow-card transition-all"
                           >
                             <CardHeader>
                               <div className="flex items-start gap-3">
-                                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                <div className="h-10 w-10 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
                                   <FileText className="h-5 w-5 text-primary" />
                                 </div>
                                 <div className="flex-1">
@@ -1204,14 +1274,14 @@ export function Portfolio() {
                     )}
 
                     {/* Bookkeeper Service Card */}
-                    <Card className="border-2 border-emerald-500/30 bg-gradient-to-br from-emerald-50/40 to-background dark:from-emerald-950/20">
+                    <Card className="border border-primary/30 bg-gradient-to-br from-primary/8 to-card shadow-card">
                       <CardHeader>
                         <div className="flex items-start gap-3">
-                          <div className="h-12 w-12 rounded-lg bg-emerald-500/15 flex items-center justify-center flex-shrink-0">
-                            <Calculator className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                          <div className="h-12 w-12 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
+                            <Calculator className="h-6 w-6 text-primary" />
                           </div>
                           <div className="flex-1">
-                            <CardTitle className="text-xl mb-2">
+                            <CardTitle className="text-xl mb-2 font-serif">
                               Bookkeeper
                             </CardTitle>
                             <CardDescription className="text-base leading-relaxed">
@@ -1226,7 +1296,7 @@ export function Portfolio() {
                       <CardContent>
                         <div className="space-y-3">
                           <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
-                            <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                            <CheckCircle2 className="h-4 w-4 text-primary" />
                             Key Expertise
                           </h4>
                           <div className="grid md:grid-cols-2 gap-3">
@@ -1243,10 +1313,10 @@ export function Portfolio() {
                             ].map((item) => (
                               <div
                                 key={item}
-                                className="flex items-center gap-2 p-2 rounded-md bg-emerald-50/60 dark:bg-emerald-950/30 w-full"
+                                className="flex items-center gap-2 p-2 rounded-md bg-primary/10 w-full"
                               >
-                                <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 flex-shrink-0" />
-                                <span className="text-sm text-muted-foreground">
+                                <div className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
+                                <span className="text-sm text-foreground">
                                   {item}
                                 </span>
                               </div>
@@ -1260,10 +1330,10 @@ export function Portfolio() {
                     {(isEditMode
                       ? editedAccountsPayable
                       : portfolioData?.accountsPayable) && (
-                      <Card className="border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-background">
+                      <Card className="border border-primary/25 bg-card shadow-card">
                         <CardHeader>
                           <div className="flex items-start gap-3">
-                            <div className="h-12 w-12 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
+                            <div className="h-12 w-12 rounded-lg bg-primary/15 flex items-center justify-center flex-shrink-0">
                               <Receipt className="h-6 w-6 text-primary" />
                             </div>
                             <div className="flex-1 space-y-2">
@@ -1294,7 +1364,7 @@ export function Portfolio() {
                                 </>
                               ) : (
                                 <>
-                                  <CardTitle className="text-xl mb-2">
+                                  <CardTitle className="text-xl mb-2 font-serif">
                                     {portfolioData?.accountsPayable.title}
                                   </CardTitle>
                                   <CardDescription className="text-base leading-relaxed">
@@ -1350,7 +1420,7 @@ export function Portfolio() {
                                       </Button>
                                     </>
                                   ) : (
-                                    <div className="flex items-center gap-2 p-2 rounded-md bg-background/50 w-full">
+                                    <div className="flex items-center gap-2 p-2 rounded-md bg-secondary/50 w-full">
                                       <div className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
                                       <span className="text-sm text-muted-foreground">
                                         {expertise}
@@ -1369,11 +1439,11 @@ export function Portfolio() {
                     {(isEditMode
                       ? editedAccountsReceivable
                       : portfolioData?.accountsReceivable) && (
-                      <Card className="border-2 border-accent/30 bg-gradient-to-br from-accent/5 to-background">
+                      <Card className="border border-accent/25 bg-card shadow-card">
                         <CardHeader>
                           <div className="flex items-start gap-3">
-                            <div className="h-12 w-12 rounded-lg bg-accent/20 flex items-center justify-center flex-shrink-0">
-                              <DollarSign className="h-6 w-6 text-accent-foreground" />
+                            <div className="h-12 w-12 rounded-lg bg-accent/15 flex items-center justify-center flex-shrink-0">
+                              <DollarSign className="h-6 w-6 text-primary" />
                             </div>
                             <div className="flex-1 space-y-2">
                               {isEditMode && editedAccountsReceivable ? (
@@ -1403,7 +1473,7 @@ export function Portfolio() {
                                 </>
                               ) : (
                                 <>
-                                  <CardTitle className="text-xl mb-2">
+                                  <CardTitle className="text-xl mb-2 font-serif">
                                     {portfolioData?.accountsReceivable?.title}
                                   </CardTitle>
                                   <CardDescription className="text-base leading-relaxed">
@@ -1421,7 +1491,7 @@ export function Portfolio() {
                           <div className="space-y-3">
                             <div className="flex items-center justify-between">
                               <h4 className="font-semibold text-sm text-foreground flex items-center gap-2">
-                                <CheckCircle2 className="h-4 w-4 text-accent-foreground" />
+                                <CheckCircle2 className="h-4 w-4 text-primary" />
                                 Key Expertise
                               </h4>
                               {isEditMode && (
@@ -1463,8 +1533,8 @@ export function Portfolio() {
                                       </Button>
                                     </>
                                   ) : (
-                                    <div className="flex items-center gap-2 p-2 rounded-md bg-background/50 w-full">
-                                      <div className="h-1.5 w-1.5 rounded-full bg-accent-foreground flex-shrink-0" />
+                                    <div className="flex items-center gap-2 p-2 rounded-md bg-secondary/50 w-full">
+                                      <div className="h-1.5 w-1.5 rounded-full bg-primary flex-shrink-0" />
                                       <span className="text-sm text-muted-foreground">
                                         {expertise}
                                       </span>
@@ -1484,21 +1554,21 @@ export function Portfolio() {
           </section>
 
           {/* Tools & Expertise Section */}
-          <section
-            id="tools"
-            className="py-20 bg-gradient-to-br from-primary/5 to-background"
-          >
+          <section id="tools" className="py-20 bg-secondary/15">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  <h2 className="text-3xl md:text-4xl font-bold font-serif text-foreground mb-4">
                     Tools & Expertise
                   </h2>
-                  <Separator className="w-24 mx-auto" />
+                  <div className="w-16 h-0.5 bg-primary rounded-full mx-auto mt-2 mb-8" />
                 </div>
 
                 {isLoading ? (
-                  <div className="grid md:grid-cols-3 gap-6">
+                  <div
+                    className="grid md:grid-cols-3 gap-6"
+                    data-ocid="tools.loading_state"
+                  >
                     <Skeleton className="h-64" />
                     <Skeleton className="h-64" />
                     <Skeleton className="h-64" />
@@ -1575,11 +1645,12 @@ export function Portfolio() {
                       return (
                         <Card
                           key={tool.name || `tool-${index}`}
-                          className="border-2 text-center"
+                          className="border border-border bg-card hover:border-primary/40 shadow-card text-center transition-all"
+                          data-ocid={`tools.item.${index + 1}`}
                         >
                           <CardContent className="pt-8 pb-6 space-y-4">
                             <div className="flex justify-center">
-                              <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center">
+                              <div className="h-20 w-20 rounded-full bg-primary/15 flex items-center justify-center">
                                 {getIcon()}
                               </div>
                             </div>
@@ -1625,7 +1696,10 @@ export function Portfolio() {
                                   <h3 className="font-bold text-lg text-foreground mb-1">
                                     {tool.name}
                                   </h3>
-                                  <Badge variant="secondary" className="mb-3">
+                                  <Badge
+                                    variant="outline"
+                                    className="mb-3 border border-primary/30 text-primary bg-primary/10"
+                                  >
                                     {tool.expertiseLevel}
                                   </Badge>
                                   <p className="text-sm text-muted-foreground leading-relaxed">
@@ -1657,17 +1731,21 @@ export function Portfolio() {
             <div className="container mx-auto px-4">
               <div className="max-w-3xl mx-auto">
                 <div className="text-center mb-12">
-                  <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                  <h2 className="text-3xl md:text-4xl font-bold font-serif text-foreground mb-4">
                     Get in Touch
                   </h2>
-                  <Separator className="w-24 mx-auto" />
+                  <div className="w-16 h-0.5 bg-primary rounded-full mx-auto mt-2 mb-4" />
                   <p className="text-muted-foreground mt-4">
                     Ready to discuss your bookkeeping needs? Send me a message
                     and I'll get back to you promptly.
                   </p>
                 </div>
 
-                <Card className="border-2">
+                <p className="text-center text-primary font-medium mb-6">
+                  Let's work together — reach out today.
+                </p>
+
+                <Card className="border border-border bg-card shadow-card">
                   <CardContent className="pt-6">
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div className="grid md:grid-cols-2 gap-6">
@@ -1682,6 +1760,7 @@ export function Portfolio() {
                             onChange={handleInputChange}
                             placeholder="Your name"
                             required
+                            data-ocid="contact.name.input"
                           />
                         </div>
                         <div className="space-y-2">
@@ -1696,6 +1775,7 @@ export function Portfolio() {
                             onChange={handleInputChange}
                             placeholder="your.email@example.com"
                             required
+                            data-ocid="contact.email.input"
                           />
                         </div>
                       </div>
@@ -1708,6 +1788,7 @@ export function Portfolio() {
                           value={formData.company}
                           onChange={handleInputChange}
                           placeholder="Your company name (optional)"
+                          data-ocid="contact.company.input"
                         />
                       </div>
 
@@ -1723,14 +1804,16 @@ export function Portfolio() {
                           placeholder="Tell me about your bookkeeping needs..."
                           className="min-h-[150px] resize-none"
                           required
+                          data-ocid="contact.message.textarea"
                         />
                       </div>
 
                       <Button
                         type="submit"
                         size="lg"
-                        className="w-full"
+                        className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
                         disabled={submitContactForm.isPending}
+                        data-ocid="contact.submit.button"
                       >
                         {submitContactForm.isPending ? (
                           <>
@@ -1744,6 +1827,10 @@ export function Portfolio() {
                           </>
                         )}
                       </Button>
+                      <p className="text-sm text-muted-foreground text-center mt-4">
+                        If you are unable to reach me here, you may contact me
+                        using the contact information provided below.
+                      </p>
                     </form>
                   </CardContent>
                 </Card>
@@ -1752,17 +1839,19 @@ export function Portfolio() {
           </section>
 
           {/* Footer */}
-          <footer className="border-t bg-background/80 backdrop-blur-sm py-10">
+          <footer className="bg-secondary/30 border-t border-border backdrop-blur-sm py-10">
             <div className="container mx-auto px-4">
+              {/* Gold gradient top line */}
+              <div className="h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent mb-8" />
               <div className="flex flex-col items-center justify-center gap-4 text-center text-sm text-muted-foreground">
-                <p className="text-base font-semibold text-foreground">
+                <p className="text-lg font-semibold font-serif text-primary">
                   Iris Greziel Espanto
                 </p>
                 <div className="flex flex-col sm:flex-row items-center gap-4">
                   <a
                     href="tel:+639150528906"
                     data-ocid="footer.phone.link"
-                    className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+                    className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors"
                   >
                     <Phone className="h-4 w-4" />
                     +63 915 052 8906
@@ -1770,7 +1859,7 @@ export function Portfolio() {
                   <a
                     href="mailto:irisgrezielespanto@gmail.com"
                     data-ocid="footer.email.link"
-                    className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+                    className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors"
                   >
                     <Mail className="h-4 w-4" />
                     irisgrezielespanto@gmail.com
@@ -1780,7 +1869,7 @@ export function Portfolio() {
                     target="_blank"
                     rel="noopener noreferrer"
                     data-ocid="footer.linkedin.link"
-                    className="flex items-center gap-1.5 hover:text-foreground transition-colors"
+                    className="flex items-center gap-1.5 text-muted-foreground hover:text-primary transition-colors"
                   >
                     <Linkedin className="h-4 w-4" />
                     LinkedIn Profile
@@ -1794,7 +1883,7 @@ export function Portfolio() {
                     href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-medium text-foreground underline-offset-4 hover:underline"
+                    className="font-medium text-muted-foreground underline-offset-4 hover:underline hover:text-primary transition-colors"
                   >
                     caffeine.ai
                   </a>
